@@ -36,7 +36,6 @@
 ### Association
 
 - belongs_to :user
-- has_one :address
 - has_one :record
 
 ## records テーブル
@@ -60,7 +59,7 @@
 | prefecture_id | integer    | null: false                    |
 | city          | string     | null: false                    |
 | address       | string     | null: false                    |
-| phone_number  | integer    | null: false                    |
+| phone_number  | string     | null: false                    |
 | record        | references | null: false, foreign_key: true |
 
 ### Association
