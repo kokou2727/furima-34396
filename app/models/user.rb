@@ -7,11 +7,11 @@ class User < ApplicationRecord
   # PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
 
-  validates :password, format: { with: PASSWORD_REGEX, message: "test" }
+  validates :password, format: { with: PASSWORD_REGEX, message: "Include both letters and numbers" }
   validates :nickname, presence: true
-  validates :first_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: "test" }
-  validates :last_name, presence: true, format: {with: /\A[ぁ-んァ-ン一-龥]/, message: "test" }
-  validates :first_furigana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: "test" }
-  validates :last_furigana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: "test" }
+  validates :first_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: "Full-width characters" }
+  validates :last_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: "Full-width characters" }
+  validates :first_furigana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: "Full-width katakana characters" }
+  validates :last_furigana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: "Full-width katakana characters" }
   validates :birthday, presence: true
 end
