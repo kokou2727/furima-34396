@@ -7,11 +7,13 @@ class Item < ApplicationRecord
     validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'Out of setting range' }
   end
 
-  validates :category_id, numericality: { other_than: 1, message:'Select'}
-  validates :fee_id, numericality: { other_than: 1, message:'Select'}
-  validates :shipping_date_id, numericality: { other_than: 1, message:'Select'}
-  validates :from_id, numericality: { other_than: 1, message:'Select'}
-  validates :state_id, numericality: { other_than: 1, message:'Select'}
+  with_options numericality: { other_than: 1, message:'Select'} do
+    validates :category_id
+    validates :fee_id
+    validates :shipping_date_id
+    validates :from_id
+    validates :state_id
+  end
 
   belongs_to :user
   has_one_attached :image
