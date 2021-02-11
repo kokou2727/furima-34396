@@ -3,15 +3,15 @@ class Item < ApplicationRecord
     validates :title
     validates :description
     validates :image
-    validates :price, format: { with: /\A[0-9]+\z/, message: 'Price Half-width number' },
-                      numericality: { only_integer: true, greater_than: 300, less_than: 9_999_999, message: 'Price Out of setting range' }
+    validates :price, numericality: { with: /\A[0-9]+\z/, message: 'Half-width number' }
+    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'Out of setting range' }
   end
 
-  validates :category_id, numericality: { other_than: 1 }
-  validates :fee_id, numericality: { other_than: 1 }
-  validates :shipping_date_id, numericality: { other_than: 1 }
-  validates :from_id, numericality: { other_than: 1 }
-  validates :state_id, numericality: { other_than: 1 }
+  validates :category_id, numericality: { other_than: 1, message:'Select'}
+  validates :fee_id, numericality: { other_than: 1, message:'Select'}
+  validates :shipping_date_id, numericality: { other_than: 1, message:'Select'}
+  validates :from_id, numericality: { other_than: 1, message:'Select'}
+  validates :state_id, numericality: { other_than: 1, message:'Select'}
 
   belongs_to :user
   has_one_attached :image
