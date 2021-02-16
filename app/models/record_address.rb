@@ -1,12 +1,13 @@
 class RecordAddress
   include ActiveModel::Model
-  attr_accessor :postal_code, :prefecture_id, :city, :address, :phone_number, :building_name, :item_id, :user_id, :record_id
+  attr_accessor :postal_code, :prefecture_id, :city, :address, :phone_number, :building_name, :item_id, :user_id, :record_id, :token
 
   with_options presence: true do
     validates :city
     validates :address
     validates :user_id
     validates :item_id
+    validates :token
     validates :phone_number, format: {with: /\A\d{11}\z/, message: "Input only number"}
     validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "Input correctly"}
   end
