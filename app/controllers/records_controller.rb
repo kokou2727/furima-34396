@@ -1,7 +1,7 @@
 class RecordsController < ApplicationController
-  before_action :authenticate_user!, only:[:index, :create]
-  before_action :set_item, only:[:index, :create]
-  before_action :move_to_index, only:[:index, :create]
+  before_action :authenticate_user!, only: [:index, :create]
+  before_action :set_item, only: [:index, :create]
+  before_action :move_to_index, only: [:index, :create]
 
   def index
     @record_address = RecordAddress.new
@@ -22,18 +22,20 @@ class RecordsController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
-  def move_to_index  
-    redirect_to root_path if current_user.id == @item.user_id or @item.record.present?
+  def move_to_index
+    redirect_to root_path if (current_user.id == @item.user_id) || @item.record.present?
   end
 
   private
 
   def record_params
-    params.require(:record_address).permit(:postal_code, :prefecture_id, :city, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+    params.require(:record_address).permit(:postal_code, :prefecture_id, :city, :address, :building_name, :phone_number).merge(
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
+    )
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: record_params[:token],

@@ -26,14 +26,14 @@ RSpec.describe RecordAddress, type: :model do
 
     context '購入できないとき' do
       it 'postal_codeが空だと保存できないこと' do
-       @record_address.postal_code = ''
-       @record_address.valid?
+        @record_address.postal_code = ''
+        @record_address.valid?
         expect(@record_address.errors.full_messages).to include("Postal code can't be blank")
       end
       it 'postal_codeが半角のハイフンを含んだ正しい形式でないと保存できないこと' do
         @record_address.postal_code = '1234567'
         @record_address.valid?
-        expect(@record_address.errors.full_messages).to include("Postal code Input correctly")
+        expect(@record_address.errors.full_messages).to include('Postal code Input correctly')
       end
       it 'cityが空だと保存できないこと' do
         @record_address.city = ''
@@ -53,7 +53,7 @@ RSpec.describe RecordAddress, type: :model do
       it 'phone_numberが11桁より多い数字だと保存できないこと' do
         @record_address.phone_number = '180123456789'
         @record_address.valid?
-        expect(@record_address.errors.full_messages).to include("Phone number Input only number")
+        expect(@record_address.errors.full_messages).to include('Phone number Input only number')
       end
       it 'user_idが空だと保存できないこと' do
         @record_address.user_id = ''
@@ -66,9 +66,9 @@ RSpec.describe RecordAddress, type: :model do
         expect(@record_address.errors.full_messages).to include("Item can't be blank")
       end
       it 'prefecture_idが1では保存できないこと' do
-       @record_address.prefecture_id = 1
-       @record_address.valid?
-       expect(@record_address.errors.full_messages).to include("Prefecture Select")
+        @record_address.prefecture_id = 1
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include('Prefecture Select')
       end
       it 'tokenが空だと保存できないこと' do
         @record_address.token = nil
