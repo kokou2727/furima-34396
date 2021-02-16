@@ -55,6 +55,11 @@ RSpec.describe RecordAddress, type: :model do
         @record_address.valid?
         expect(@record_address.errors.full_messages).to include('Phone number Input only number')
       end
+      it 'phone_numberは英数混合では保存できないこと' do
+        @record_address.phone_number = 'abc123456789'
+        @record_address.valid?
+        expect(@record_address.errors.full_messages).to include('Phone number Input only number')
+      end
       it 'user_idが空だと保存できないこと' do
         @record_address.user_id = ''
         @record_address.valid?
