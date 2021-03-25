@@ -1,57 +1,68 @@
-# CircleFriends
-## アプリケーション概要
-URL：　https://newcirclefriends.com/
-PC向けwebアプリケーション（レスポンシブ非対応）
+# テーブル設計
 
-ネット上でもより密接な繋がりを得られるよう考案したSNSです。Twitterのような投稿のほか、サークルを作ってグループチャットやグループ通話ができます。
+## users テーブル
 
-Basic認証　
-ID: admin　Pass: 2222
-
-
-テスト用アカウント　Email test@test.com Password test123
-
-## 利用方法
-上記のページにアクセスするとログインページに遷移しますので、そこでログイン、またはページ下部の　Create an account　をクリックし、アカウントの新規登録を行ってください。
-
-ログインしたらホーム画面が表示されますのでご自由にお使いください。
-
-サークルの作成はホーム画面左の「サークル」をタップし、ページ遷移後、右上の「サークルを作成」から行います。
+| Column             | Type   | Options                    |
+| ------------------ | ------ | -------------------------- |
+| last_name          | string | null: false                |
+| first_name         | string | null: false                |
+| last_furigana      | string | null: false                |
+| first_furigana     | string | null: false                |
+| nickname           | string | null: false                |
+| email              | string | null: false, unique: true  |
+| encrypted_password | string | null: false                |
+| birthday           | date   | null: false                |
 
 
-## アプリの目的
-### 誹謗中傷のないSNS
-昨今、SNS上では賞賛の言葉だけでなく、批判的な言葉も多く見られます。これらを無くして、かつ、人と人との繋がりをより強固にすることを目的としたものです。
+### Association
 
-具体的な策としてはSNS上でのコミュニケーションをグループ化し、自分が関わりたいと思う人とだけ関われるようにしました。この目的は批判的な感情を持たせないことではなく、その感情を表に出させないことです。
+- has_many :items
+- has_many :records
 
-## 機能要件
-### ユーザー機能
-ユーザ認証機能(Devise)
+## items テーブル
 
-ユーザ情報 登録・編集・削除
+| Column           | Type       | Options                        |
+| ---------------- | ---------- | ------------------------------ |
+| title            | string     | null: false                    |
+| description      | text       | null: false                    |
+| category_id      | integer    | null: false                    |
+| state_id         | integer    | null: false                    |
+| price            | integer    | null: false                    |
+| from_id          | integer    | null: false                    |
+| shipping_date_id | integer    | null: false                    |
+| fee_id           | integer    | null: false                    |
+| user             | references | null: false, foreign_key: true |
 
-フォロー機能
+### Association
 
-### ツイート機能
-ツイート投稿
+- belongs_to :user
+- has_one :record
 
-#タグ
+## records テーブル
 
-いいね
+| Column    | Type       | Options                        |
+| --------- | ---------- | ------------------------------ |
+| item      | references | null: false, foreign_key: true |
+| user      | references | null: false, foreign_key: true |
 
-### グループ機能
-チャット（メッセージ送信・一覧）
+### Association
 
-ユーザー招待
+- belongs_to :user
+- belongs_to :item
+- has_one :address
 
-グループ情報 作成・編集・削除
+## addresses テーブル
 
-ビデオ通話
+| Column        | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| postal_code   | string     | null: false                    |
+| prefecture_id | integer    | null: false                    |
+| city          | string     | null: false                    |
+| address       | string     | null: false                    |
+| phone_number  | string     | null: false                    |
+| record        | references | null: false, foreign_key: true |
+| building_name | string     |                                |
 
-### 検索機能
-投稿・ユーザー・グループ
-### 実装予定の機能
-通知機能
+### Association
 
-## データベース設計
+- belongs_to :record
